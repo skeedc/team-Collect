@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: Collect
+  name: collect
   labels:
-    app: Collect
+    app: collect
 spec:
   ports:
     - port: 8080
       targetPort: 8080
   selector:
-    app: Collect
+    app: collect
