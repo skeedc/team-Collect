@@ -1,27 +1,29 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: Collect
+  name: collect
   labels:
-    app: Collect
+    app: collect
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: Collect
+      app: collect
   template:
     metadata:
       labels:
-        app: Collect
+        app: collect
+      annotations:
+        sidecar.istio.io/inject: "true"
     spec:
       containers:
-        - name: Collect
-          image: username/Collect:latest
+        - name: collect
+          image: 496278789073.dkr.ecr.ap-northeast-1.amazonaws.com/skccuser15-collect:v1
           ports:
             - containerPort: 8080
           readinessProbe:
             httpGet:
-              path: '/actuator/health'
+              path: '/collects'
               port: 8080
             initialDelaySeconds: 10
             timeoutSeconds: 2
@@ -29,7 +31,7 @@ spec:
             failureThreshold: 10
           livenessProbe:
             httpGet:
-              path: '/actuator/health'
+              path: '/collects'
               port: 8080
             initialDelaySeconds: 120
             timeoutSeconds: 2
